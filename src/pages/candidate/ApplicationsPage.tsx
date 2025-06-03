@@ -43,7 +43,7 @@ const ApplicationsPage: React.FC = () => {
         <Input
           placeholder="Search companies or positions..."
           className="max-w-xl"
-          leftIcon={<Search className="text-gray-400" size={20} />}
+          leftIcon={<Search className="text-gray-400\" size={20} />}
         />
         <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
           <Filter size={20} className="mr-2" />
