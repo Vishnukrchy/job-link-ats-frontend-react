@@ -85,7 +85,7 @@ const CandidatesPage: React.FC = () => {
           placeholder="Search candidates..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          leftIcon={<Search className="text-gray-400" size={20} />}
+          leftIcon={<Search className="text-gray-400\" size={20} />}
           className="max-w-xl"
         />
         <select
