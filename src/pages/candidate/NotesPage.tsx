@@ -29,7 +29,7 @@ const NotesPage: React.FC = () => {
     {
       id: '2',
       title: 'Follow-up Email Draft',
-      content: 'Thank you for the opportunity to interview for the Senior Developer position. I enjoyed learning more about the team's challenges and vision...',
+      content: 'Thank you for the opportunity to interview for the Senior Developer position. I enjoyed learning more about the team\'s challenges and vision...',
       date: new Date('2024-01-18'),
       tags: ['follow-up', 'email'],
       isPinned: false,
@@ -82,7 +82,7 @@ const NotesPage: React.FC = () => {
               placeholder="Search notes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              leftIcon={<Search className="text-gray-400" size={20} />}
+              leftIcon={<Search className="text-gray-400\" size={20} />}
             />
           </div>
 
