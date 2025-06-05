@@ -23,7 +23,6 @@ import CallsPage from './pages/candidate/CallsPage';
 import TimelinePage from './pages/candidate/TimelinePage';
 import NotesPage from './pages/candidate/NotesPage';
 
-// Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode; userType?: 'hr' | 'candidate' }> = ({ 
   children, 
   userType 
@@ -41,7 +40,6 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; userType?: 'hr' | 'c
   return <>{children}</>;
 };
 
-// HR Layout wrapper
 const HRLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <ProtectedRoute userType="hr">
     <DashboardLayout>
@@ -50,7 +48,6 @@ const HRLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </ProtectedRoute>
 );
 
-// Candidate Layout wrapper
 const CandidateLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <ProtectedRoute userType="candidate">
     <CandidateDashboardLayout>
@@ -64,6 +61,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="flex flex-col min-h-screen">
+          <Navbar />
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
@@ -91,6 +89,7 @@ function App() {
             {/* Fallback route */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
