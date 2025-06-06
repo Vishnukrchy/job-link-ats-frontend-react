@@ -23,18 +23,31 @@ import CallsPage from './pages/candidate/CallsPage';
 import TimelinePage from './pages/candidate/TimelinePage';
 import NotesPage from './pages/candidate/NotesPage';
 
+// Loading component
+const LoadingSpinner: React.FC = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+  </div>
+);
+
 const ProtectedRoute: React.FC<{ children: React.ReactNode; userType?: 'hr' | 'candidate' }> = ({ 
   children, 
   userType 
 }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   if (userType && user?.userType !== userType) {
-    return <Navigate to="/" />;
+    // Redirect to appropriate dashboard based on user type
+    const redirectPath = user?.userType === 'hr' ? '/hr/dashboard' : '/candidate/dashboard';
+    return <Navigate to={redirectPath} replace />;
   }
 
   return <>{children}</>;
@@ -56,41 +69,79 @@ const CandidateLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
   </ProtectedRoute>
 );
 
+// Public route wrapper that redirects authenticated users
+const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated, user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (isAuthenticated && user) {
+    // Redirect authenticated users to their appropriate dashboard
+    const redirectPath = user.userType === 'hr' ? '/hr/dashboard' : '/candidate/dashboard';
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return <>{children}</>;
+};
+
+function AppContent() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        } />
+        <Route path="/signup" element={
+          <PublicRoute>
+            <SignupPage />
+          </PublicRoute>
+        } />
+        
+        {/* HR routes */}
+        <Route path="/hr/dashboard" element={<HRLayout><HRDashboardPage /></HRLayout>} />
+        <Route path="/hr/jobs" element={<HRLayout><JobsPage /></HRLayout>} />
+        <Route path="/hr/jobs/new" element={<HRLayout><NewJobPage /></HRLayout>} />
+        <Route path="/hr/candidates" element={<HRLayout><CandidatesPage /></HRLayout>} />
+        <Route path="/hr/candidates/new" element={<HRLayout><NewCandidatePage /></HRLayout>} />
+        <Route path="/hr/status-board" element={<HRLayout><StatusBoardPage /></HRLayout>} />
+        <Route path="/hr/reports" element={<HRLayout><ReportsPage /></HRLayout>} />
+        <Route path="/hr/company" element={<HRLayout><ProfilePage /></HRLayout>} />
+        
+        {/* Candidate routes */}
+        <Route path="/candidate/dashboard" element={<CandidateLayout><CandidateDashboardPage /></CandidateLayout>} />
+        <Route path="/candidate/profile" element={<CandidateLayout><ProfilePage /></CandidateLayout>} />
+        <Route path="/candidate/applications" element={<CandidateLayout><ApplicationsPage /></CandidateLayout>} />
+        <Route path="/candidate/goals" element={<CandidateLayout><GoalsPage /></CandidateLayout>} />
+        <Route path="/candidate/calls" element={<CandidateLayout><CallsPage /></CandidateLayout>} />
+        <Route path="/candidate/timeline" element={<CandidateLayout><TimelinePage /></CandidateLayout>} />
+        <Route path="/candidate/notes" element={<CandidateLayout><NotesPage /></CandidateLayout>} />
+        
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            
-            {/* HR routes */}
-            <Route path="/hr/dashboard" element={<HRLayout><HRDashboardPage /></HRLayout>} />
-            <Route path="/hr/jobs" element={<HRLayout><JobsPage /></HRLayout>} />
-            <Route path="/hr/jobs/new" element={<HRLayout><NewJobPage /></HRLayout>} />
-            <Route path="/hr/candidates" element={<HRLayout><CandidatesPage /></HRLayout>} />
-            <Route path="/hr/candidates/new" element={<HRLayout><NewCandidatePage /></HRLayout>} />
-            <Route path="/hr/status-board" element={<HRLayout><StatusBoardPage /></HRLayout>} />
-            <Route path="/hr/reports" element={<HRLayout><ReportsPage /></HRLayout>} />
-            
-            {/* Candidate routes */}
-            <Route path="/candidate/dashboard" element={<CandidateLayout><CandidateDashboardPage /></CandidateLayout>} />
-            <Route path="/candidate/profile" element={<CandidateLayout><ProfilePage /></CandidateLayout>} />
-            <Route path="/candidate/applications" element={<CandidateLayout><ApplicationsPage /></CandidateLayout>} />
-            <Route path="/candidate/goals" element={<CandidateLayout><GoalsPage /></CandidateLayout>} />
-            <Route path="/candidate/calls" element={<CandidateLayout><CallsPage /></CandidateLayout>} />
-            <Route path="/candidate/timeline" element={<CandidateLayout><TimelinePage /></CandidateLayout>} />
-            <Route path="/candidate/notes" element={<CandidateLayout><NotesPage /></CandidateLayout>} />
-            
-            {/* Fallback route */}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-          <Footer />
-        </div>
+        <AppContent />
       </Router>
     </AuthProvider>
   );

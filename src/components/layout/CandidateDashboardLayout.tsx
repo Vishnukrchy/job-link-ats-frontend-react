@@ -53,7 +53,6 @@ const CandidateDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const handleLogout = () => {
     logout();
-    // Navigation will be handled by the AuthProvider
   };
 
   return (
@@ -68,9 +67,12 @@ const CandidateDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ chi
         `}
       >
         <div className="flex items-center justify-between h-16 px-4">
-          <span className="text-xl font-semibold text-gray-800">
-            {isSidebarOpen ? 'JobLink' : 'JL'}
+          <span className={`text-xl font-semibold text-gray-800 transition-opacity ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
+            {isSidebarOpen ? 'JobLink' : ''}
           </span>
+          {!isSidebarOpen && (
+            <span className="text-xl font-semibold text-gray-800">JL</span>
+          )}
           <button
             onClick={toggleSidebar}
             className="hidden md:block p-1 rounded-lg hover:bg-gray-100"
@@ -95,50 +97,50 @@ const CandidateDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ chi
               to="/candidate/dashboard" 
               icon={<LayoutDashboard size={20} />}
             >
-              Dashboard
+              {isSidebarOpen && 'Dashboard'}
             </NavItem>
             <NavItem 
               to="/candidate/profile" 
               icon={<User size={20} />}
             >
-              Profile
+              {isSidebarOpen && 'Profile'}
             </NavItem>
             <NavItem 
               to="/candidate/applications" 
               icon={<FileText size={20} />}
             >
-              My Applications
+              {isSidebarOpen && 'My Applications'}
             </NavItem>
             <NavItem 
               to="/candidate/goals" 
               icon={<Target size={20} />}
             >
-              Set Job Target
+              {isSidebarOpen && 'Set Job Target'}
             </NavItem>
             <NavItem 
               to="/candidate/calls" 
               icon={<MessageSquare size={20} />}
             >
-              HR Calls & Feedback
+              {isSidebarOpen && 'HR Calls & Feedback'}
             </NavItem>
             <NavItem 
               to="/candidate/timeline" 
               icon={<Calendar size={20} />}
             >
-              Application Timeline
+              {isSidebarOpen && 'Application Timeline'}
             </NavItem>
             <NavItem 
               to="/candidate/notes" 
               icon={<StickyNote size={20} />}
             >
-              Notes & Follow-up
+              {isSidebarOpen && 'Notes & Follow-up'}
             </NavItem>
             <button
               onClick={handleLogout}
-              className="flex items-center w-full px-4 py-2.5 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100"
+              className={`flex items-center w-full px-4 py-2.5 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 ${!isSidebarOpen ? 'justify-center' : ''}`}
             >
               <LogOut size={20} />
-              <span className="ml-3">Logout</span>
+              {isSidebarOpen && <span className="ml-3">Logout</span>}
             </button>
           </nav>
         </div>
