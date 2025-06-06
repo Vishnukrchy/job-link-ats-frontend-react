@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { 
+  Bell,
   BarChart2, 
   Calendar,
   ChevronLeft,
   ChevronRight,
   FileText,
+  FolderOpen,
   LayoutDashboard, 
   LogOut, 
   Menu,
   MessageSquare,
+  Search,
   StickyNote,
   Target,
+  Upload,
   User,
   X
 } from 'lucide-react';
@@ -38,7 +42,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, children, onClick }) => (
     onClick={onClick}
   >
     {icon}
-    <span className="ml-3">{children}</span>
+    {children && <span className="ml-3">{children}</span>}
   </NavLink>
 );
 
@@ -106,10 +110,34 @@ const CandidateDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ chi
               {isSidebarOpen && 'Profile'}
             </NavItem>
             <NavItem 
+              to="/candidate/jobs" 
+              icon={<Search size={20} />}
+            >
+              {isSidebarOpen && 'Job Discovery'}
+            </NavItem>
+            <NavItem 
               to="/candidate/applications" 
               icon={<FileText size={20} />}
             >
               {isSidebarOpen && 'My Applications'}
+            </NavItem>
+            <NavItem 
+              to="/candidate/calendar" 
+              icon={<Calendar size={20} />}
+            >
+              {isSidebarOpen && 'Interview Calendar'}
+            </NavItem>
+            <NavItem 
+              to="/candidate/feedback" 
+              icon={<BarChart2 size={20} />}
+            >
+              {isSidebarOpen && 'Resume Feedback'}
+            </NavItem>
+            <NavItem 
+              to="/candidate/documents" 
+              icon={<Upload size={20} />}
+            >
+              {isSidebarOpen && 'Document Upload'}
             </NavItem>
             <NavItem 
               to="/candidate/goals" 
@@ -134,6 +162,12 @@ const CandidateDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ chi
               icon={<StickyNote size={20} />}
             >
               {isSidebarOpen && 'Notes & Follow-up'}
+            </NavItem>
+            <NavItem 
+              to="/candidate/notifications" 
+              icon={<Bell size={20} />}
+            >
+              {isSidebarOpen && 'Notifications'}
             </NavItem>
             <button
               onClick={handleLogout}

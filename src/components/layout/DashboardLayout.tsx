@@ -4,12 +4,16 @@ import {
   BarChart2, 
   Briefcase, 
   Building2, 
+  Calendar,
   ChevronLeft,
   ChevronRight,
   LayoutDashboard, 
   LogOut, 
+  Mail,
   Menu,
   PlusCircle,
+  Star,
+  Tag,
   Users,
   X
 } from 'lucide-react';
@@ -36,7 +40,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, children, onClick }) => (
     onClick={onClick}
   >
     {icon}
-    <span className="ml-3">{children}</span>
+    {children && <span className="ml-3">{children}</span>}
   </NavLink>
 );
 
@@ -120,6 +124,30 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               icon={<PlusCircle size={20} />}
             >
               {isSidebarOpen && 'Add Candidate'}
+            </NavItem>
+            <NavItem 
+              to="/hr/interviews" 
+              icon={<Calendar size={20} />}
+            >
+              {isSidebarOpen && 'Interview Scheduler'}
+            </NavItem>
+            <NavItem 
+              to="/hr/tags" 
+              icon={<Tag size={20} />}
+            >
+              {isSidebarOpen && 'Manage Tags'}
+            </NavItem>
+            <NavItem 
+              to="/hr/shortlists" 
+              icon={<Star size={20} />}
+            >
+              {isSidebarOpen && 'Shortlists'}
+            </NavItem>
+            <NavItem 
+              to="/hr/templates" 
+              icon={<Mail size={20} />}
+            >
+              {isSidebarOpen && 'Email & WhatsApp'}
             </NavItem>
             <NavItem 
               to="/hr/status-board" 
