@@ -188,7 +188,7 @@ const DocumentUploadPage: React.FC = () => {
               
               <div className="flex items-center gap-2">
                 {document.isShared && (
-                  <Badge variant="success" size="sm">
+                  <Badge variant="success\" size="sm">
                     Shared with {document.sharedWith.length} companies
                   </Badge>
                 )}

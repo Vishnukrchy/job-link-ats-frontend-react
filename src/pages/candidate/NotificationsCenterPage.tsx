@@ -225,7 +225,7 @@ const NotificationsCenterPage: React.FC = () => {
                     
                     <div className="flex items-center gap-2">
                       {notification.actionUrl && (
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline\" size="sm">
                           View Details
                         </Button>
                       )}
