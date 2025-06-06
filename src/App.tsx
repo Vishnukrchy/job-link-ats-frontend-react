@@ -41,7 +41,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; userType?: 'hr' | 'c
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login\" replace />;
   }
 
   if (userType && user?.userType !== userType) {
@@ -130,7 +130,7 @@ function AppContent() {
         <Route path="/candidate/notes" element={<CandidateLayout><NotesPage /></CandidateLayout>} />
         
         {/* Fallback route */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/\" replace />} />
       </Routes>
       <Footer />
     </div>
