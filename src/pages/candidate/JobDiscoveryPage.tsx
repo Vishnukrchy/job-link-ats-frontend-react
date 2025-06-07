@@ -3,7 +3,7 @@ import { Search, MapPin, Clock, DollarSign, Building2, Filter, Heart, ExternalLi
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
-import { Badge } from '../../components/common/Badge';
+import Badge from '../../components/common/Badge';
 
 interface Job {
   id: string;
