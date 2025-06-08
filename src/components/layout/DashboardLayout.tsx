@@ -11,7 +11,6 @@ import {
   LogOut, 
   Mail,
   Menu,
-  PlusCircle,
   Star,
   Tag,
   Users,
@@ -108,22 +107,10 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               {isSidebarOpen && 'Job Postings'}
             </NavItem>
             <NavItem 
-              to="/hr/jobs/new" 
-              icon={<PlusCircle size={20} />}
-            >
-              {isSidebarOpen && 'Add New Job'}
-            </NavItem>
-            <NavItem 
               to="/hr/candidates" 
               icon={<Users size={20} />}
             >
               {isSidebarOpen && 'Candidates'}
-            </NavItem>
-            <NavItem 
-              to="/hr/candidates/new" 
-              icon={<PlusCircle size={20} />}
-            >
-              {isSidebarOpen && 'Add Candidate'}
             </NavItem>
             <NavItem 
               to="/hr/interviews" 

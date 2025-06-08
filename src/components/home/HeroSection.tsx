@@ -1,10 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -24,6 +27,14 @@ const HeroSection: React.FC = () => {
         duration: 0.5,
       },
     },
+  };
+
+  const handleGetStarted = () => {
+    navigate('/signup');
+  };
+
+  const handleFindJobs = () => {
+    navigate('/signup?role=candidate');
   };
 
   return (
@@ -66,6 +77,7 @@ const HeroSection: React.FC = () => {
               <Button
                 className="h-14 px-8 rounded-none"
                 variant="primary"
+                onClick={handleFindJobs}
               >
                 Find Jobs
               </Button>
@@ -81,6 +93,20 @@ const HeroSection: React.FC = () => {
               <span>•</span>
               <a href="#" className="hover:text-primary-600 hover:underline">UI/UX Designer</a>
             </div>
+
+            <motion.div
+              className="mt-8"
+              variants={itemVariants}
+            >
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={handleGetStarted}
+                className="px-8 py-3"
+              >
+                Get Started for Free
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

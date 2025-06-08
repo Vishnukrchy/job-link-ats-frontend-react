@@ -1,9 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 
 const CtaSection: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/signup');
+  };
+
+  const handleLearnMore = () => {
+    // Scroll to features section or navigate to about page
+    const featuresSection = document.getElementById('features');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="py-16 md:py-24 bg-primary-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,6 +42,7 @@ const CtaSection: React.FC = () => {
                 variant="accent"
                 size="lg"
                 rightIcon={<ArrowRight size={18} />}
+                onClick={handleGetStarted}
               >
                 Get Started for Free
               </Button>
@@ -34,6 +50,7 @@ const CtaSection: React.FC = () => {
                 variant="outline"
                 size="lg"
                 className="bg-transparent border-white text-white hover:bg-primary-800"
+                onClick={handleLearnMore}
               >
                 Learn More
               </Button>

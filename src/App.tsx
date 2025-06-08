@@ -51,7 +51,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; userType?: 'hr' | 'c
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login\" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (userType && user?.userType !== userType) {
@@ -105,18 +105,31 @@ function AppContent() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<LandingPage />} />
+        {/* Public routes with Navbar and Footer */}
+        <Route path="/" element={
+          <>
+            <Navbar />
+            <LandingPage />
+            <Footer />
+          </>
+        } />
         <Route path="/login" element={
           <PublicRoute>
-            <LoginPage />
+            <>
+              <Navbar />
+              <LoginPage />
+              <Footer />
+            </>
           </PublicRoute>
         } />
         <Route path="/signup" element={
           <PublicRoute>
-            <SignupPage />
+            <>
+              <Navbar />
+              <SignupPage />
+              <Footer />
+            </>
           </PublicRoute>
         } />
         
@@ -149,9 +162,8 @@ function AppContent() {
         <Route path="/candidate/notifications" element={<CandidateLayout><NotificationsCenterPage /></CandidateLayout>} />
         
         {/* Fallback route */}
-        <Route path="*" element={<Navigate to="/\" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <Footer />
     </div>
   );
 }
